@@ -1,12 +1,13 @@
 %%Можно запускать секциями в editor -> run section
 %% Построение матрицы управляемости
-A = [1 2 3
-    1 2 2
-    0 3 4]
+format rat;
+A = [0 1 0
+    0 0 1
+    -5 -7 -3] 
 
-B = [-1
-    1
-    0]
+B = [3
+    -5
+    -8]
 
 C = [B A*B A^2*B]
 rg = rank(C)
@@ -34,7 +35,7 @@ r=roots(p)  %спектр собственных чисел
 %% 
 A_volna =[0    1    0;
           0     0    1;
-          3 -6 7]
+          -5 -7 -3]
 B_volna = [0
            0
            1]
@@ -52,7 +53,7 @@ C_volna_inv
 S_Frob=C*C_volna_inv
 S_Frob_inv =inv(S_Frob)
 %% ручками считаем Q_volna
-Q_volna = [-9 -5 -13]
+Q_volna = [85 16 63]
 Q=Q_volna*S_Frob_inv
 
 %% Через формулу Аккермана
