@@ -7,3 +7,4 @@ y1=subs(fx)
 y2=subs(fy)
 
 plot(y1,y2)
+grid on
