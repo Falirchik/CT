@@ -2,19 +2,15 @@
 %% Построение матрицы управляемости
 %меняем А и В под наши нужды
 format rational
-A = [0 1 0 0 0
-    0 0 1 0 0
-    0 0 0 1 0
-    0 0 0 0 1
-    2 1 -5 5\2 1\2] 
+A = [0 1 0
+    0 0 1
+    -2 3 0] 
 
 B = [0
-    0
-    1
-    0
-    4]
+    0 
+    1]
 
-C = [B A*B A^2*B A^3*B A^4*B]
+C = [B A*B A^2*B]
 rg = rank(C)
 
 %% Проверка стабилизируемости системы (разложение Калмана)
@@ -86,13 +82,16 @@ Q_A=-e*C_inv*X_A
 N = normalize(V,'norm',1)
 
 %% берем с.в., вставляем в Р (столбцами)
-P = [1 -5 -3
-    0 3 4
-    -1 8 3]
+P = [1 0 1
+    1 1 -2
+    1 2 4]
 P_inv = inv(P)
 
 A_domic = P_inv*A*P
 B_domic = P_inv*B
+syms Q_1 Q_2 Q_3;
+tetta_domic =[Q_1 Q_2 Q_3]
+A_c=A_domic+B_domic*tetta_domic
 %% ручками считаем tetha через матрицу замкнутой системы. A_c = A_domic + B_domic*Tetha_domic
 Tetha_domic = [20 0 0]
 Tetha = Tetha_domic*P_inv
@@ -105,13 +104,15 @@ N = normalize(V(:,5),'norm',1)
 
 % берем из V нужные нам с.в. Далее вставляем в P_inv транспонированные с.в. (чтобы было строкой) и дополняем до базиса
 %% вставляем найденные с.в., дополняем до базиса
-P_inv=[-1 0 1
-    0 1 0
-    0 0 1]
+P_inv=[2 1 -1
+    -1 -1 0
+    0 1 0]
 P=inv(P_inv)
 %% 
 A_cherta = P_inv*A*P
 B_cherta = P_inv*B
+tetta_cherta =[Q_1 Q_2 Q_3]
+A_c=A_cherta+B_cherta*tetta_cherta
 %% стабильно считаем ручками через А_с, где A_c=A_cherta+B_cherta*tetta_cherta
 Tetha_cherta = [-6 0 0]
 Tetha = Tetha_cherta*P_inv
